@@ -108,6 +108,7 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+  --background-primary-gradient: linear-gradient(30deg, #dc02c3, #5c53fe);
 }
 
 @layer base {
@@ -117,4 +118,12 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+@layer utilities {
+  .bg-primary-gradient {
+    background-image: var(--background-primary-gradient);
+  }
+  /* .bg-primary-gradient {
+    background-image: linear-gradient(30deg, #DC02C3, #5C53FE);
+  } */
 }
