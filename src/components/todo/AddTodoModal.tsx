@@ -4,7 +4,6 @@ import {
   DialogClose,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -12,14 +11,18 @@ import {
 
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { addTodo } from "@/redux/features/todoSlice";
+import { useAppDispatch } from "@/redux/hooks";
 import { FormEvent, useState } from "react";
 const AddTodoModal = () => {
-  const [task, setTask] = useState("");
+  const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
 
+  const dispatch = useAppDispatch();
+  const randomId = Math.random().toString(36).slice(2, 7);
   const onsubmit = (e: FormEvent) => {
     e.preventDefault();
-    console.log(task, description);
+    dispatch(addTodo({ id: randomId, title, description }));
   };
   return (
     <Dialog>
@@ -37,10 +40,10 @@ const AddTodoModal = () => {
           <div className="grid gap-4 py-4">
             <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="task" className="text-right">
-                Task
+                Title
               </Label>
               <Input
-                onBlur={(e) => setTask(e.target.value)}
+                onBlur={(e) => setTitle(e.target.value)}
                 id="task"
                 className="col-span-3"
               />
