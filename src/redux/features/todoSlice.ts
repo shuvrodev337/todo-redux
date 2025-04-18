@@ -4,6 +4,7 @@ type TTodo = {
   title: string;
   description: string;
   isCompleted?: boolean;
+  priority: string;
 };
 type TTodosStateType = {
   todos: TTodo[];
