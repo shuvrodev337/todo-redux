@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-type TTodo = {
-  id: string;
+export type TTodo = {
+  // id: string;
+  _id?: string;
   title: string;
   description: string;
   isCompleted?: boolean;
@@ -20,11 +21,11 @@ export const todoSlice = createSlice({
     addTodo: (state, action: PayloadAction<TTodo>) => {
       state.todos.push({ ...action.payload, isCompleted: false }); // push won't mutate the  state.todos (currentstate er todos array) , IIMAR handles the non-mutation of non-primitive data behind the scene for reedux.
     },
-    removeTodo: (state, action: PayloadAction<string>) => {
-      state.todos = state.todos.filter((item) => item.id !== action.payload);
+    removeTodo: (state, action: PayloadAction<string | undefined>) => {
+      state.todos = state.todos.filter((item) => item._id !== action.payload);
     },
     toggleComplete: (state, action: PayloadAction<string>) => {
-      const task = state.todos.find((item) => item.id === action.payload);
+      const task = state.todos.find((item) => item._id === action.payload);
       // toggling isCompletede value
       task!.isCompleted = !task?.isCompleted;
       //sorting

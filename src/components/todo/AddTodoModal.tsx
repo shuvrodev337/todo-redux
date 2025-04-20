@@ -11,18 +11,36 @@ import {
 
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { addTodo } from "@/redux/features/todoSlice";
-import { useAppDispatch } from "@/redux/hooks";
+import { useAddTodoMutation } from "@/redux/api/api";
+// import { addTodo } from "@/redux/features/todoSlice";
+// import { useAppDispatch } from "@/redux/hooks";
 import { FormEvent, useState } from "react";
 const AddTodoModal = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
 
-  const dispatch = useAppDispatch();
-  const randomId = Math.random().toString(36).slice(2, 7);
+  // for local state
+  // const dispatch = useAppDispatch();
+  // const randomId = Math.random().toString(36).slice(2, 7);
+
+  //for server state
+  const [addTodo, { isError, isLoading, isSuccess, data }] =
+    useAddTodoMutation();
+  // [functionToPost, { isError, isLoading, isSuccess, data ... etc}] =    useAddTodoMutation()
   const onsubmit = (e: FormEvent) => {
     e.preventDefault();
-    dispatch(addTodo({ id: randomId, title, description }));
+    const todoData = {
+      title,
+      description,
+      priority: "high",
+      isCompleted: false,
+    };
+    // for local state
+    // dispatch(addTodo({ id: randomId, title, description , priority : 'high' }));
+
+    //for server state
+    addTodo(todoData);
+    console.log({ isError, isLoading, isSuccess, data });
   };
   return (
     <Dialog>
