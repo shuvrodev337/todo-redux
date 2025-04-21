@@ -2,7 +2,7 @@ import { Pencil, Trash } from "lucide-react";
 import { Button } from "../ui/button";
 import { useAppDispatch } from "@/redux/hooks";
 import { removeTodo } from "@/redux/features/todoSlice";
-type TTodoCardProps = {
+export type TTodoCardProps = {
   _id?: string;
   title: string;
   description: string;
@@ -30,6 +30,7 @@ const TodoCard = ({
         type="checkbox"
         name="complete"
         id=""
+        defaultChecked={isCompleted}
       />
       <p className="font-medium flex-1">{title}</p>
       <div className="flex-1 flex gap-2 items-center">

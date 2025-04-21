@@ -15,9 +15,17 @@ import { useAddTodoMutation } from "@/redux/api/api";
 // import { addTodo } from "@/redux/features/todoSlice";
 // import { useAppDispatch } from "@/redux/hooks";
 import { FormEvent, useState } from "react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
 const AddTodoModal = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const [priority, setPriority] = useState("high");
 
   // for local state
   // const dispatch = useAppDispatch();
@@ -32,7 +40,7 @@ const AddTodoModal = () => {
     const todoData = {
       title,
       description,
-      priority: "high",
+      priority,
       isCompleted: false,
     };
     // for local state
@@ -76,10 +84,25 @@ const AddTodoModal = () => {
                 className="col-span-3"
               />
             </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="description" className="text-right">
+                Priority
+              </Label>
+              <Select onValueChange={(value) => setPriority(value)}>
+                <SelectTrigger className="w-[180px]">
+                  <SelectValue placeholder={priority} />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="high">High</SelectItem>
+                  <SelectItem value="medium">Medium</SelectItem>
+                  <SelectItem value="low">Low</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
           </div>
           <div className="flex justify-end">
             <DialogClose asChild>
-              <Button type="submit">Save changes</Button>
+              <Button type="submit">Save Task</Button>
             </DialogClose>
           </div>
         </form>

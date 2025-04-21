@@ -10,18 +10,29 @@ export const baseApi = createApi({
   endpoints: (builder) => ({
     // for get => query , for post/update/delete => mutation
     getTodos: builder.query({
-      query: () => ({
-        url: "/todos",
-        method: "GET",
-      }),
+      query: (priority) => {
+        const params = new URLSearchParams(); // params is an object, if priority comes,priority property will be appended
+        if (priority) {
+          params.append("priority", priority);
+        }
+        return {
+          url: "/todos",
+          method: "GET",
+          //  params: { priority }, // must be given objecthere,  or new way->
+          params: params,
+        };
+      },
       providesTags: ["todo"], // this query is the provider of the 'todo' cached data
     }),
     addTodo: builder.mutation({
-      query: (data) => ({
-        url: "/todos",
-        method: "POST",
-        body: data, // must be given an object here
-      }),
+      query: (data) => {
+        console.log("post data from aapi.ts=>", data);
+        return {
+          url: "/todos",
+          method: "POST",
+          body: data, // must be given an object here
+        };
+      },
       invalidatesTags: ["todo"], // invalidates the cache , so that the it's provider query can refetch
     }),
   }),
