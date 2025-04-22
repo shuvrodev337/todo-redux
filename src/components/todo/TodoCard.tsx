@@ -2,8 +2,9 @@ import { Pencil, Trash } from "lucide-react";
 import { Button } from "../ui/button";
 import { useAppDispatch } from "@/redux/hooks";
 import { removeTodo } from "@/redux/features/todoSlice";
+import { useToggleTodoStatusMutation } from "@/redux/api/api";
 export type TTodoCardProps = {
-  _id?: string;
+  _id: string;
   title: string;
   description: string;
   isCompleted?: boolean;
@@ -18,9 +19,19 @@ const TodoCard = ({
   priority,
 }: TTodoCardProps) => {
   const dispatch = useAppDispatch();
-
+  const [toggleComplete, { isError, isLoading, isSuccess, data }] =
+    useToggleTodoStatusMutation();
   const toggleCompleteState = () => {
     //  dispatch(toggleComplete(id));
+    const toggledTodo = {
+      _id,
+      title,
+      description,
+      isCompleted: !isCompleted,
+      priority,
+    };
+    toggleComplete(toggledTodo);
+    console.log({ isError, isLoading, isSuccess, data });
   };
   return (
     <div className="flex justify-between items-center p-3 bg-white rounded-sm border">

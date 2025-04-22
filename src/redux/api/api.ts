@@ -35,9 +35,24 @@ export const baseApi = createApi({
       },
       invalidatesTags: ["todo"], // invalidates the cache , so that the it's provider query can refetch
     }),
+    toggleTodoStatus: builder.mutation({
+      query: (data) => {
+        console.log("update data from aapi.ts=>", data);
+        return {
+          url: `/todo/${data._id}`,
+          method: "PUT",
+          body: data, // must be given an object here
+        };
+      },
+      invalidatesTags: ["todo"],
+    }),
   }),
 });
-export const { useGetTodosQuery, useAddTodoMutation } = baseApi; //  baseApi returns hooks based on endpoints
+export const {
+  useGetTodosQuery,
+  useAddTodoMutation,
+  useToggleTodoStatusMutation,
+} = baseApi; //  baseApi returns hooks based on endpoints
 
 /*
 
